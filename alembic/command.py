@@ -120,6 +120,20 @@ def revision(
         script for script in
         revision_context.generate_scripts()
     ]
+
+    for script in scripts:
+        script_name = os.path.splitext(os.path.basename(script.path))[0]
+        dir_name = os.path.dirname(script.path)
+        dir_name_sql = os.path.join(dir_name, 'sql')
+        if not os.path.exists(dir_name_sql):
+            os.makedirs(dir_name_sql)
+        sql_upgrade_script = '{}/{}_upgrade.sql'.format(dir_name_sql, script_name)
+        sql_downgrade_script = '{}/{}_downgrade.sql'.format(dir_name_sql, script_name)
+        f = open(sql_upgrade_script, 'w')
+        f.close()
+        f = open(sql_downgrade_script, 'w')
+        f.close()
+        
     if len(scripts) == 1:
         return scripts[0]
     else:
