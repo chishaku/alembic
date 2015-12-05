@@ -14,11 +14,15 @@ depends_on = ${repr(depends_on)}
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.sql import text
 ${imports if imports else ""}
 
 def upgrade():
-    ${upgrades if upgrades else "pass"}
-
+    upgrade_script = '${config.file_config._sections['alembic']['script_location']}/versions/sql/${up_revision}_${message.replace(' ', '_')}_upgrade.sql'
+    sql = open(upgrade_script, 'r').read()
+    op.get_bind().execute(text(sql))
 
 def downgrade():
-    ${downgrades if downgrades else "pass"}
+    downgrade_script = '${config.file_config._sections['alembic']['script_location']}/versions/sql/${up_revision}_${message.replace(' ', '_')}_downgrade.sql'
+    sql = open(downgrade_script, 'r').read()
+    op.get_bind().execute(text(sql))
