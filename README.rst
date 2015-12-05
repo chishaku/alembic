@@ -1,3 +1,12 @@
+**Modifications to the alembic library:**
+
+* Generate raw SQL upgrade and downgrade files in a ``versions/sql`` directory.
+* Each revision script pulls from these raw SQL files by default, as specified in ``script.py.mako``.
+
+
+-----
+
+
 Alembic is a database migrations tool written by the author
 of `SQLAlchemy <http://www.sqlalchemy.org>`_.  A migrations tool
 offers the following functionality:
